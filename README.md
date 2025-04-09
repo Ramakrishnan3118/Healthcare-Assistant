@@ -1,110 +1,171 @@
+# 🏥 Healthcare-Assistant
 
-# Med Scheduler
-
-This project integrates a hospital appointment scheduling system using an LLM API (OpenAI) with voice functionality for users. The system allows users to interact via chat or voice to schedule or cancel appointments.
-
----
-
-## Table of Contents
-
-1. [Prerequisites](#prerequisites)
-2. [Installation Steps](#installation-steps)
-3. [Execution](#execution)
-4. [Linux Setup](#linux-setup)
-5. [Troubleshooting](#troubleshooting)
+**Healthcare-Assistant** is an AI-powered hospital appointment scheduling system built using **GPT-4**, **FastAPI**, and **Streamlit**. It supports both **text and voice-based interaction**, allowing users to easily book, cancel, or inquire about appointments through a conversational interface.
 
 ---
 
-## Prerequisites
+## 📋 Table of Contents
 
-Ensure that you have the following tools installed on your system:
-
-- Python 3.12+ (recommended)
-- `pip` package manager
-- [FastAPI](https://fastapi.tiangolo.com/)
-- [Streamlit](https://streamlit.io/)
-- `pyttsx3` (for voice integration)
-- `requests` (to send requests to the FastAPI backend)
-- `gTTS` or `espeak` (if you choose to use Google or eSpeak for text-to-speech functionality)
-- `mpg321` or similar audio player (to play audio on Linux)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Linux-Specific Setup](#linux-specific-setup)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
+- [License](#license)
 
 ---
 
-## Installation Steps
+## ✨ Features
 
-### 1. Clone the repository
+- 🧠 GPT-4 powered natural language understanding.
+- 🎙️ Voice-to-text and text-to-speech capabilities.
+- ⚡ FastAPI-based backend for high-performance REST APIs.
+- 📊 Streamlit frontend for interactive user interface.
+- 🔐 Secure OpenAI API integration.
 
-```bash
-git clone https://github.com/Jacobgokul/Med-Scheduler.git
-cd Med-Scheduler
+---
+
+## 🏗️ Architecture
+
+```mermaid
+graph TD
+    User -->|Text/Voice| Streamlit[Streamlit Frontend]
+    Streamlit -->|HTTP Request| FastAPI[FastAPI Backend]
+    FastAPI -->|LLM Query| OpenAI[GPT-4 API]
+    FastAPI -->|DB Operations| Database[(SQLite/MySQL/PostgreSQL)]
 ```
 
-### 2. Set up a virtual environment (optional but recommended)
+---
+
+## 🧰 Prerequisites
+
+Ensure the following are installed:
+
+- Python 3.12+
+- `pip`
+- Git
+- OpenAI API key
+
+Python Packages:
+- `fastapi`
+- `streamlit`
+- `pyttsx3`, `gTTS` (TTS options)
+- `speechrecognition`, `pyaudio` (STT options)
+- `requests`, `uvicorn`, `python-dotenv`
+
+Linux Audio Tools (if applicable):
+- `espeak`
+- `mpg321`
+
+---
+
+## ⚙️ Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Ramakrishnan3118/Healthcare-Assistant.git
+cd Healthcare-Assistant
+```
+
+### 2. Set Up Virtual Environment (Optional)
 
 ```bash
 python3 -m venv venv
-source venv/bin/activate  # On Linux/macOS
+source venv/bin/activate  # Linux/macOS
 ```
 
-### 3. Install required dependencies
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Set up the environment variables
+### 4. Configure Environment Variables
 
-Create a `.env` file in the project root directory and include your OpenAI API key:
+in `.env` file in the root directory add GPT-4 API key:
 
-```bash
+```
 OPENAI_API_KEY=your_openai_api_key_here
 ```
 
-### 5. Install additional packages for text-to-speech
+### 5. Install TTS Packages
 
-To use voice functionality, install either `pyttsx3` (for eSpeak) or `gTTS` (Google Text-to-Speech):
+Choose your preferred method:
 
-#### For `pyttsx3` (eSpeak)
+- For **eSpeak**:
 
-```bash
-sudo apt install espeak
-pip install pyttsx3
-```
+  ```bash
+  sudo apt install espeak mpg321
+  pip install pyttsx3
+  ```
+
+- For **gTTS**:
+
+  ```bash
+  pip install gTTS
+  ```
 
 ---
 
-## Execution
+## 🚀 Usage
 
-### 1. Start the FastAPI backend
-
-The backend handles the logic for appointment scheduling. Run it using `uvicorn`:
+### 1. Start the Backend (FastAPI)
 
 ```bash
 uvicorn main:app --reload
 ```
 
-This will start the server locally at `http://127.0.0.1:8000`.
+Visit: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
-### 2. Run the Streamlit frontend
+### 2. Launch the Frontend (Streamlit)
 
-Once the backend is running, open another terminal and run the Streamlit app:
+In a new terminal:
 
 ```bash
 streamlit run app.py
 ```
 
-This will open the app in your browser, allowing you to interact with the appointment scheduler via chat or voice.
+This will open the interface in your default browser.
 
 ---
 
-## Linux Setup
+## 🐧 Linux-Specific Setup
 
-To ensure the system works smoothly on Linux, follow these additional steps:
+```bash
+sudo apt install espeak mpg321
+```
 
-1. **Install required dependencies**:
+Ensure microphone access is enabled and functioning.
 
-   Ensure that all necessary libraries for text-to-speech and audio playback are installed:
+---
 
-   ```bash
-   sudo apt install espeak
-   ```
+## 🛠️ Troubleshooting
+
+- ✅ Verify `.env` contains the correct OpenAI key.
+- ✅ Ensure `uvicorn` is serving the API at `localhost:8000`.
+- ✅ Check the console for any Python or Streamlit errors.
+- ✅ If voice features don’t work, confirm microphone and audio playback configurations.
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! To contribute:
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-name`)
+3. Commit your changes.
+4. Push to your fork.
+5. Open a pull request.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
