@@ -17,30 +17,30 @@ from db.models import Base, Appointment
 load_dotenv()  # Fetch API keys from .env file
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
-# Create the necessary tables in the database
+# chat  in the sql database
 Base.metadata.create_all(engine)
 
 app = FastAPI()
 
 conversation_prompt = PromptTemplate(
     input_variables=["previous_conversations", "user_input"],
-    template=""" 
-    You are an AI assistant that handles hospital appointment scheduling. Your task is to gather the following information from the user:
-    
-    - Doctor's specialty (e.g., Cardiologist, Dentist) or the medical issue the user is facing.
-    - The date of the appointment (in YYYY-MM-DD format).
-    - The time for the appointment (in HH:MM format).
+    template="""
+    You are a helpful AI assistant for hospital appointment scheduling. Your role is to interact with the user and collect the following essential information:
 
-    If the user mentions a health issue, suggest a corresponding doctor.
+    1. **Doctor's Specialty** (e.g., Cardiologist, Dermatologist, Dentist) — or identify one based on the health issue the user describes.
+    2. **Appointment Date** in `YYYY-MM-DD` format.
+    3. **Appointment Time** in `HH:MM` (24-hour) format.
 
-    If any information is missing, prompt the user for more details.
-
-    If all the required details are collected, reply with the following format:
-    {{
-        "doctor": "Doctor's Name",
-        "date": "YYYY-MM-DD",
-        "time": "HH:MM"
-    }}
+    **Instructions:**
+    - If the user describes a **symptom or condition** (e.g., toothache, chest pain), recommend the appropriate doctor/specialty.
+    - If the user has **not provided all three required fields**, ask them specifically for what's missing.
+    - Once all details are gathered, **respond only** with a structured JSON object:
+    ```json
+    {
+    "doctor": "Doctor's Name or Specialty",
+    "date": "YYYY-MM-DD",
+    "time": "HH:MM"
+    }
 
     If the user hasn't provided all necessary details, respond with:
     {{
@@ -59,7 +59,7 @@ openai_model = ChatOpenAI(model_name="gpt-4o", openai_api_key=openai_api_key)
 
 conversation_memory = ConversationBufferMemory(memory_key="previous_conversations", return_messages=True)
 
-# Set up the conversation chain with the model and prompt
+# conversation chain with the model and prompt
 conversation_chain = LLMChain(
     llm=openai_model,
     prompt=conversation_prompt,

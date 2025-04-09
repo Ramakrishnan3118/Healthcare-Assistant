@@ -13,8 +13,6 @@
 - [Usage](#usage)
 - [Linux-Specific Setup](#linux-specific-setup)
 - [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [License](#license)
 
 ---
 
@@ -149,23 +147,5 @@ Ensure microphone access is enabled and functioning.
 - ✅ Ensure `uvicorn` is serving the API at `localhost:8000`.
 - ✅ Check the console for any Python or Streamlit errors.
 - ✅ If voice features don’t work, confirm microphone and audio playback configurations.
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! To contribute:
-
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-name`)
-3. Commit your changes.
-4. Push to your fork.
-5. Open a pull request.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
