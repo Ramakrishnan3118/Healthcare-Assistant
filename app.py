@@ -4,7 +4,7 @@ import streamlit as st
 from dotenv import load_dotenv
 import speech_recognition as sr
 import pyttsx3
-from main import memory
+from main import conversation_memory as memory
 
 def main():
     try:
